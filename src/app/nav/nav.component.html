@@ -49,7 +49,7 @@
     <ul class="navbar-nav">
       <li class="nav-item mr-4" routerLinkActive="active">
         <span
-          class="nav-link mr-4"
+          class="nav-link mr-4 pointable"
           *ngIf="!isAuthenticated()"
           (click)="login()"
         >
@@ -65,16 +65,27 @@
     </ul>
 
     <a class="mr-4" [routerLink]="['/user/profile']" *ngIf="isAuthenticated()">
-      <img [src]="getProfile().picture" *ngIf="getProfile().picture" />
+      <img
+        [src]="getProfile().picture"
+        *ngIf="getProfile().picture"
+        width="40"
+      />
       <img
         src="{{ '../../../../assets/user.png' }}"
         *ngIf="!getProfile().picture"
+        width="40"
       />
     </a>
 
-    <span class="nav-link mr-4" *ngIf="isAuthenticated()" (click)="logout()">
-      Logout
-    </span>
+    <ul class="navbar-nav">
+      <span
+        class="nav-link mr-4 pointable"
+        *ngIf="isAuthenticated()"
+        (click)="logout()"
+      >
+        Logout
+      </span>
+    </ul>
   </div>
 </nav>
 

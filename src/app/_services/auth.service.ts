@@ -13,7 +13,7 @@ export class AuthService {
       domain: 'xzhan.auth0.com',
       responseType: 'token id_token',
       audience: 'http://localhost:3000',
-      redirectUri: 'http://localhost:4200/login',
+      redirectUri: 'http://localhost:4200',
       scope: 'openid profile'
     };
     this._auth0Client = new WebAuth({ ...this._properties });
@@ -90,14 +90,14 @@ export class AuthService {
     }
   }
 
-  public getProfile(): Object {
+  public getProfile(): object {
     if (this._idToken) {
       const helper = new JwtHelperService();
       return helper.decodeToken(this._idToken);
     }
   }
 
-  public getAccessToken(): String {
+  public getAccessToken(): string {
     return this._accessToken;
   }
 
