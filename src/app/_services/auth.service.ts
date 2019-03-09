@@ -8,33 +8,31 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthService {
   constructor() {
-    this._properties = {
+    this.properties = {
       clientID: 'mFuMRFj7gnRFca5cS7F7CGIg6rTYcn3B',
       domain: 'xzhan.auth0.com',
       responseType: 'token id_token',
       audience: 'http://localhost:3000',
-      redirectUri: 'http://localhost:4200',
+      redirectUri: 'http://localhost:4200/events/',
       scope: 'openid profile'
     };
-    this._auth0Client = new WebAuth({ ...this._properties });
+    this.auth0Client = new WebAuth({ ...this.properties });
   }
-  protected _auth0Client: WebAuth;
-  private _accessToken: string;
-  private _idToken: string;
-  private _properties: AuthOptions;
-
-  currentUser: User;
+  protected auth0Client: WebAuth;
+  private accessToken: string;
+  private idToken: string;
+  private properties: AuthOptions;
 
   public login(): void {
     // triggers auth0 authentication page
-    this._auth0Client.authorize();
+    this.auth0Client.authorize();
   }
 
   public checkSession(): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       // checks in Auth0's server if the browser has a session
-      this._auth0Client.checkSession(
-        this._properties,
+      this.auth0Client.checkSession(
+        this.properties,
         async (error, authResult) => {
           if (error && error.error !== 'login_required') {
             // some other error
@@ -56,11 +54,11 @@ export class AuthService {
   public isAuthenticated(): boolean {
     // Check whether the current time is past the
     // Access Token's expiry time
-    return this._accessToken != null;
+    return this.accessToken != null;
   }
 
   private handleAuthentication(): void {
-    this._auth0Client.parseHash((err, authResult) => {
+    this.auth0Client.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this._setSession(authResult);
@@ -71,15 +69,15 @@ export class AuthService {
   }
 
   private _setSession(authResult): void {
-    this._accessToken = authResult.accessToken;
-    this._idToken = authResult.idToken;
+    this.accessToken = authResult.accessToken;
+    this.idToken = authResult.idToken;
   }
 
   // check if there is a property Admin in the access token
   public isAdmin(): boolean {
-    if (this._accessToken) {
+    if (this.accessToken) {
       const helper = new JwtHelperService();
-      const decodedToken = helper.decodeToken(this._accessToken);
+      const decodedToken = helper.decodeToken(this.accessToken);
       if (decodedToken['http://localhost:3000/roles'].indexOf('admin') > -1) {
         return true;
       } else {
@@ -91,19 +89,19 @@ export class AuthService {
   }
 
   public getProfile(): object {
-    if (this._idToken) {
+    if (this.idToken) {
       const helper = new JwtHelperService();
-      return helper.decodeToken(this._idToken);
+      return helper.decodeToken(this.idToken);
     }
   }
 
   public getAccessToken(): string {
-    return this._accessToken;
+    return this.accessToken;
   }
 
   public logout(): void {
     // Remove tokens
-    delete this._accessToken;
-    delete this._idToken;
+    delete this.accessToken;
+    delete this.idToken;
   }
 }

@@ -22,11 +22,13 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.firstName = new FormControl(
-      this.authService.currentUser.firstName,
+      // tslint:disable-next-line: no-string-literal
+      this.authService.getProfile()['given_name'],
       Validators.required
     );
     this.lastName = new FormControl(
-      this.authService.currentUser.lastName,
+      // tslint:disable-next-line: no-string-literal
+      this.authService.getProfile()['family_name'],
       Validators.required
     );
 

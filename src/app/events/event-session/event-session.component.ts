@@ -57,13 +57,15 @@ export class EventSessionComponent implements OnChanges {
       this.voterService.deleteVoter(
         this.eventId,
         session,
-        this.authService.currentUser.username
+        // tslint:disable-next-line: no-string-literal
+        this.authService.getProfile()['name']
       );
     } else {
       this.voterService.addVoter(
         this.eventId,
         session,
-        this.authService.currentUser.username
+        // tslint:disable-next-line: no-string-literal
+        this.authService.getProfile()['name']
       );
     }
 
@@ -73,6 +75,7 @@ export class EventSessionComponent implements OnChanges {
   }
 
   hasVoted(session: Session) {
-    return session.voters.includes(this.authService.currentUser.username);
+    // tslint:disable-next-line: no-string-literal
+    return session.voters.includes(this.authService.getProfile()['name']);
   }
 }
