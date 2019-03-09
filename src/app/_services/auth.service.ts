@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { User } from '../_models/user';
 import { AuthOptions, WebAuth } from 'auth0-js';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
@@ -7,6 +6,12 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root'
 })
 export class AuthService {
+  private expiresAt: number;
+  protected auth0Client: WebAuth;
+  private accessToken: string;
+  private idToken: string;
+  private properties: AuthOptions;
+
   constructor() {
     this.properties = {
       clientID: 'mFuMRFj7gnRFca5cS7F7CGIg6rTYcn3B',
@@ -18,14 +23,10 @@ export class AuthService {
     };
     this.auth0Client = new WebAuth({ ...this.properties });
   }
-  protected auth0Client: WebAuth;
-  private accessToken: string;
-  private idToken: string;
-  private properties: AuthOptions;
 
   public login(): void {
     // triggers auth0 authentication page
-    this.auth0Client.authorize();
+    this.auth0Client.authorize({});
   }
 
   public checkSession(): Promise<boolean> {
@@ -54,6 +55,10 @@ export class AuthService {
   public isAuthenticated(): boolean {
     // Check whether the current time is past the
     // Access Token's expiry time
+    if (new Date().getTime() < this.expiresAt) {
+      delete this.accessToken;
+      delete this.idToken;
+    }
     return this.accessToken != null;
   }
 
@@ -71,6 +76,7 @@ export class AuthService {
   private _setSession(authResult): void {
     this.accessToken = authResult.accessToken;
     this.idToken = authResult.idToken;
+    this.expiresAt = authResult.expiresAt * 1000 + new Date().getTime();
   }
 
   // check if there is a property Admin in the access token
@@ -100,6 +106,9 @@ export class AuthService {
   }
 
   public logout(): void {
+    this.auth0Client.logout({
+      returnTo: 'http://localhost:4200/events/'
+    });
     // Remove tokens
     delete this.accessToken;
     delete this.idToken;

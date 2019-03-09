@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './_services/auth.service';
 
 @Component({
@@ -6,9 +6,9 @@ import { AuthService } from './_services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'EventBoard';
-  constructor(private auth: AuthService) {
+export class AppComponent implements OnInit {
+  constructor(private auth: AuthService) {}
+  ngOnInit(): void {
     this.auth.checkSession();
   }
 }
