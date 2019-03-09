@@ -1,0 +1,110 @@
+<div class="jumbotron col-md-8 pt-2 pb-2">
+  <div class="row">
+    <img [src]="event?.imageUrl" [alt]="event?.name" class="ml-2 event-image" />
+    <div class="col-md-11">
+      <h2>{{ event?.name | uppercase }}</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div>
+        <div><strong>Date: </strong>{{ event?.date | date: "MM/dd/yy" }}</div>
+
+        <div><strong>Time: </strong> {{ event?.time }}</div>
+        <div><strong>Price: </strong>{{ event?.price | currency: "USD" }}</div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <address>
+        <strong>Address:</strong> <br />
+        {{ event?.location?.address }} <br />
+        {{ event?.location?.city }} <br />
+        {{ event?.location?.country }}
+      </address>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-md-2">
+      <h3>Sessions</h3>
+    </div>
+
+    <div class="col-md-10">
+      <button class="btn btn-warning btn-sm" (click)="addSession()">
+        Add Session
+      </button>
+      <div class="btn-group btn-group-sm mr-5" style="float: right;">
+        <button
+          class="btn btn-secondary"
+          (click)="filterBy = 'all'"
+          [ngClass]="{ active: filterBy === 'all' }"
+        >
+          All
+        </button>
+        <button
+          class="btn btn-secondary"
+          (click)="filterBy = 'beginner'"
+          [ngClass]="{ active: filterBy === 'beginner' }"
+        >
+          Beginner
+        </button>
+        <button
+          class="btn btn-secondary"
+          (click)="filterBy = 'intermediate'"
+          [ngClass]="{ active: filterBy === 'intermediate' }"
+        >
+          Intermediate
+        </button>
+        <button
+          class="btn btn-secondary"
+          (click)="filterBy = 'advanced'"
+          [ngClass]="{ active: filterBy === 'advanced' }"
+        >
+          Advanced
+        </button>
+      </div>
+
+      <div class="btn-group btn-group-sm mr-5" dropdown style="float: right;">
+        <button
+          id="button-basic"
+          dropdownToggle
+          type="button"
+          class="btn btn-secondary dropdown-toggle"
+        >
+          Sort By <span class="caret"></span>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem">
+            <div class="dropdown-item" (click)="sortBy = 'name'">
+              Name: A
+              <fa-icon [icon]="rightArrow"></fa-icon> Z
+            </div>
+          </li>
+          <li role="menuitem">
+            <div class="dropdown-item" (click)="sortBy = 'voters'">
+              Voter:
+              <fa-icon [icon]="downArrow"></fa-icon>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <app-event-session
+    [eventId]="event.id"
+    [sessions]="event.sessions"
+    [filterBy]="filterBy"
+    [sortBy]="sortBy"
+    *ngIf="!addMode"
+  ></app-event-session>
+
+  <app-event-session-new
+    *ngIf="addMode"
+    (saveNewSession)="saveNewSession($event)"
+    (cancelAddSession)="cancelAddSession()"
+  ></app-event-session-new>
+</div>

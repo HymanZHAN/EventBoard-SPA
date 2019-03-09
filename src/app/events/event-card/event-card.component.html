@@ -1,0 +1,31 @@
+<div class="card bg-light mb-3">
+  <div class="card-header" [routerLink]="['/events/', event.id]">
+    <b>{{ event?.name }}</b>
+  </div>
+
+  <div class="card-body d-flex flex-column">
+    <h4 class="card-title">{{ event?.name | uppercase }}</h4>
+    <div>Date: {{ event?.date | date: "MM/dd/yy" }}</div>
+    <div [ngSwitch]="event?.time">
+      Time: {{ event?.time }}
+      <span *ngSwitchCase="'8:00 am'">(Early Start)</span>
+      <span *ngSwitchCase="'10:00 am'">(Late Start)</span>
+      <span *ngSwitchDefault>(Normal Start)</span>
+    </div>
+    <div>Price: {{ event?.price | currency: "USD" }}</div>
+    <div *ngIf="event?.location">
+      Location: {{ event?.location?.address }} {{ event?.location?.city }},
+      {{ event?.location?.country }}
+    </div>
+    <div *ngIf="event?.onlineUrl">Online URL: {{ event?.onlineUrl }}</div>
+
+    <button
+      type="button"
+      id="attend-btn"
+      class="btn btn-warning"
+      (click)="logClick()"
+    >
+      Attend
+    </button>
+  </div>
+</div>

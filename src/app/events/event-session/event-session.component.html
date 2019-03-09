@@ -1,0 +1,30 @@
+<div class="row" *ngFor="let session of visibleSessions">
+  <app-upvote
+    *ngIf="authService.isAuthenticated()"
+    class="col-md-1"
+    (click)="toggleVote(session)"
+    [count]="session.voters.length"
+    [voted]="hasVoted(session)"
+  ></app-upvote>
+  <app-collapsible class="col-md-10 session">
+    <div session-title>
+      <h4>
+        {{ session.name }}
+        <fa-icon
+          class="ml-2"
+          [icon]="faFire"
+          style="color: orangered"
+          *ngIf="session.voters.length > 3"
+        ></fa-icon>
+      </h4>
+
+      <h6>{{ session.presenter }}</h6>
+    </div>
+    <div session-body>
+      <span>Duration: {{ session.duration | duration }}</span>
+      <br />
+      <span>Level: {{ session.level }}</span>
+      <p>{{ session.abstract }}</p>
+    </div>
+  </app-collapsible>
+</div>

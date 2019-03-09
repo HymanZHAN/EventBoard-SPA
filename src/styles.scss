@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./../node_modules/bootswatch/dist/materia/variables";
+@import "./../node_modules/bootstrap-scss/bootstrap.scss";
+@import "./../node_modules/bootswatch/dist/materia/bootswatch";
+@import "./../node_modules/noty/lib/noty.css";
+@import "./../node_modules/noty/lib/themes/bootstrap-v3.css";
+@import "./../node_modules/noty/lib/themes/bootstrap-v4.css";
+@import "./../node_modules/noty/lib/themes/light.css";
+@import "./../node_modules/noty/lib/themes/metroui.css";
+@import "./../node_modules/noty/lib/themes/mint.css";
+@import "./../node_modules/noty/lib/themes/nest.css";
+@import "./../node_modules/noty/lib/themes/relax.css";
+@import "./../node_modules/noty/lib/themes/semanticui.css";
+@import "./../node_modules/noty/lib/themes/sunset.css";
+
+.pointable {
+  cursor: pointer;
+}

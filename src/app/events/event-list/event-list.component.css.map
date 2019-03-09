@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,WAAW,CAAC;EACR,WAAW,EAAE,KAAK;EAClB,UAAU,EAAE,GAAG;CAClB",
+    "sources": [
+        "event-list.component.scss"
+    ],
+    "names": [],
+    "file": "event-list.component.css"
+}

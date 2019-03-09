@@ -1,0 +1,13 @@
+<div class="voteContainer pointable">
+  <button class="voteButton btn btn-sm btn-secondary">
+    <fa-icon *ngIf="!voted" [icon]="emptyHeart" style="color: gray"></fa-icon>
+    <fa-icon
+      *ngIf="voted"
+      [icon]="solidHeart"
+      style="color: orangered"
+    ></fa-icon>
+    <div class="badge votingCount">
+      <div>{{ count }}</div>
+    </div>
+  </button>
+</div>

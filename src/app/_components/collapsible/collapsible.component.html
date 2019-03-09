@@ -1,0 +1,4 @@
+<div class="col-mid-8 mr-3 pointable" (click)="toggleCollapse()">
+  <ng-content select="[session-title]"></ng-content>
+  <ng-content select="[session-body]" *ngIf="!isCollapsed"></ng-content>
+</div>
