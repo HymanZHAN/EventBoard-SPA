@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'event/session/new', component: EventSessionNewComponent },
   { path: '404', component: PageNotFoundComponent },
   { path: '', redirectTo: '/events', pathMatch: 'full' },
-  { path: 'user', loadChildren: './user/user.module#UserModule' }
+  { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule) }
 ];
 
 @NgModule({
